@@ -1,0 +1,1 @@
+A simple shopping cart app to learn React on.
