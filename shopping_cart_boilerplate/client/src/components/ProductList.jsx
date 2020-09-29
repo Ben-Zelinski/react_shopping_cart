@@ -6,7 +6,7 @@ const ProductList = ({ products, onCartAdd }) => {
     <div class="product-listing">
       <h2>Products</h2>
       {products.map((product) => (
-        <Product key={product.id} product={product} onCartAdd={onCartAdd} />
+        <Product key={product._id} product={product} onCartAdd={onCartAdd} />
       ))}
     </div>
   );

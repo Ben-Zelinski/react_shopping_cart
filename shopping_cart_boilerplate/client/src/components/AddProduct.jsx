@@ -2,7 +2,7 @@ import React from "react";
 
 class AddProduct extends React.Component {
   state = {
-    productName: "",
+    productTitle: "",
     productPrice: 0,
     productQuantity: 0,
   };
@@ -11,6 +11,22 @@ class AddProduct extends React.Component {
     const tempState = Object.assign({}, this.state);
     tempState[e.target.id] = e.target.value;
     this.setState(tempState);
+  };
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    const data = {
+      title: this.state.productTitle,
+      price: this.state.productPrice,
+      quantity: this.state.productQuantity,
+    };
+
+    this.props.onSubmitClick(data);
+    this.resetState();
+  };
+
+  resetState = () => {
+    this.setState({ productTitle: "", productPrice: 0, productQuantity: 0 });
   };
 
   render() {
@@ -25,7 +41,7 @@ class AddProduct extends React.Component {
             <label for="product-name">Product Name</label>
             <input
               type="text"
-              id="productName"
+              id="productTitle"
               onChange={this.updateState}
               value={this.state.productName}
             />
@@ -52,7 +68,9 @@ class AddProduct extends React.Component {
           </div>
 
           <div class="actions form-actions">
-            <a class="button">Add</a>
+            <a class="button" onClick={this.handleSubmit}>
+              Add
+            </a>
             <a class="button">Cancel</a>
           </div>
         </form>
