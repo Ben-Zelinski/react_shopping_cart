@@ -1,10 +1,10 @@
 import React from "react";
 
-class AddProduct extends React.Component {
+class EditProduct extends React.Component {
   state = {
-    productName: "",
-    productPrice: 0,
-    productQuantity: 0,
+    productName: this.props.product.title || "",
+    productPrice: this.props.product.price || 0,
+    productQuantity: this.props.product.quantity || 0,
   };
 
   updateState = (e) => {
@@ -14,6 +14,7 @@ class AddProduct extends React.Component {
   };
 
   render() {
+    console.log(this.props);
     return (
       <div class="add-form visible">
         <p>
@@ -37,7 +38,7 @@ class AddProduct extends React.Component {
               type="text"
               id="productPrice"
               onChange={this.updateState}
-              value={this.state.price}
+              value={this.state.productPrice}
             />
           </div>
 
@@ -47,13 +48,15 @@ class AddProduct extends React.Component {
               type="text"
               id="productQuantity"
               onChange={this.updateState}
-              value={this.state.quantity}
+              value={this.state.productQuantity}
             />
           </div>
 
           <div class="actions form-actions">
             <a class="button">Add</a>
-            <a class="button">Cancel</a>
+            <a class="button" onClick={this.props.onCancelClick}>
+              Cancel
+            </a>
           </div>
         </form>
       </div>
@@ -61,4 +64,4 @@ class AddProduct extends React.Component {
   }
 }
 
-export default AddProduct;
+export default EditProduct;

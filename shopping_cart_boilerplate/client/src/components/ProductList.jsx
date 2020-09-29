@@ -1,12 +1,12 @@
 import React from "react";
 import Product from "./Product";
 
-const ProductList = ({ products }) => {
+const ProductList = ({ products, onCartAdd }) => {
   return (
     <div class="product-listing">
       <h2>Products</h2>
       {products.map((product) => (
-        <Product product={product} />
+        <Product key={product.id} product={product} onCartAdd={onCartAdd} />
       ))}
     </div>
   );
