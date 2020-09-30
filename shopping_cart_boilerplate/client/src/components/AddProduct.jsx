@@ -5,6 +5,7 @@ class AddProduct extends React.Component {
     productTitle: "",
     productPrice: 0,
     productQuantity: 0,
+    addMode: false,
   };
 
   updateState = (e) => {
@@ -22,6 +23,7 @@ class AddProduct extends React.Component {
     };
 
     this.props.onSubmitClick(data);
+    this.toggleAddMode();
     this.resetState();
   };
 
@@ -29,11 +31,17 @@ class AddProduct extends React.Component {
     this.setState({ productTitle: "", productPrice: 0, productQuantity: 0 });
   };
 
+  toggleAddMode = () => {
+    this.setState({ addMode: !this.state.addMode });
+  };
+
   render() {
     return (
-      <div class="add-form visible">
+      <div className={this.state.addMode ? "add-form visible" : "add-form"}>
         <p>
-          <a class="button add-product-button">Add A Product</a>
+          <a className="button add-product-button" onClick={this.toggleAddMode}>
+            Add A Product
+          </a>
         </p>
         <h3>Add Product</h3>
         <form>
@@ -71,7 +79,9 @@ class AddProduct extends React.Component {
             <a class="button" onClick={this.handleSubmit}>
               Add
             </a>
-            <a class="button">Cancel</a>
+            <a class="button" onClick={this.toggleAddMode}>
+              Cancel
+            </a>
           </div>
         </form>
       </div>

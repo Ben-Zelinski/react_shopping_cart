@@ -1,6 +1,6 @@
 import React from "react";
 
-const ShopHeader = ({ cart }) => {
+const ShopHeader = ({ cart, onCheckoutClick, isCartEmpty }) => {
   return (
     <header>
       <h1>The Shop!</h1>
@@ -18,7 +18,7 @@ const ShopHeader = ({ cart }) => {
               <tr key={id}>
                 <td>{product.title}</td>
                 <td>{product.quantity}</td>
-                <td>{product.total}</td>
+                <td>{product.price}</td>
               </tr>
             );
           })}
@@ -28,7 +28,14 @@ const ShopHeader = ({ cart }) => {
             </td>
           </tr>
         </table>
-        <a className="button checkout disabled">Checkout</a>
+        <a
+          className={
+            isCartEmpty() ? "button checkout disabled" : "button checkout"
+          }
+          onClick={onCheckoutClick}
+        >
+          Checkout
+        </a>
       </div>
     </header>
   );

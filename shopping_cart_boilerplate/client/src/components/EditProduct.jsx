@@ -22,8 +22,9 @@ class EditProduct extends React.Component {
       quantity: this.state.productQuantity,
     };
 
-    console.log(data)
+    console.log(data);
     this.props.onEditProduct(data);
+    this.props.onCancelClick();
   };
 
   render() {
@@ -65,8 +66,8 @@ class EditProduct extends React.Component {
           </div>
 
           <div class="actions form-actions">
-            <a class="button" onClick={this.handleSubmit} >
-              Edit
+            <a class="button" onClick={this.handleSubmit}>
+              Submit
             </a>
             <a class="button" onClick={this.props.onCancelClick}>
               Cancel

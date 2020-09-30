@@ -31,7 +31,6 @@ router.put("/products/:id", (req, res) => {
       );
     })
     .then((updatedProduct) => {
-      res.set('Access-Control-Allow-Origin', '*');
       res.json(updatedProduct);
     });
 });
@@ -40,12 +39,9 @@ router.delete("/products/:id", (req, res, next) => {
   const productId = req.params.id;
   Product.findByIdAndRemove(productId)
     .then(() => {
-      res.json();
+      res.send(202);
     })
     .catch((err) => next(err));
 });
 
 module.exports = router;
-
-
-

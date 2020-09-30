@@ -22,6 +22,10 @@ class Product extends React.Component {
     this.setState({ editMode: false });
   };
 
+  handleProductDelete = () => {
+    this.props.onProductDelete(this.props.product);
+  };
+
   render() {
     return (
       <div className="product">
@@ -33,12 +37,16 @@ class Product extends React.Component {
           </p>
           {!this.state.editMode ? (
             <div className="actions product-actions">
-              <a
-                className="button add-to-cart"
-                onClick={this.handleAddToCartClick}
-              >
-                Add to Cart
-              </a>
+              {this.props.product.quantity > 0 ? (
+                <a
+                  className="button add-to-cart"
+                  onClick={this.handleAddToCartClick}
+                >
+                  Add to Cart
+                </a>
+              ) : (
+                <a className="button add-to-cart disabled">Add to Cart</a>
+              )}
               <a class="button edit" onClick={this.handleEditClick}>
                 Edit
               </a>
@@ -50,7 +58,7 @@ class Product extends React.Component {
               onEditProduct={this.props.onEditProduct}
             />
           )}
-          <a class="delete-button">
+          <a class="delete-button" onClick={this.handleProductDelete}>
             <span>X</span>
           </a>
         </div>
