@@ -47,6 +47,7 @@ class Product extends React.Component {
             <EditProduct
               product={this.props.product}
               onCancelClick={this.handleCancelClick}
+              onEditProduct={this.props.onEditProduct}
             />
           )}
           <a class="delete-button">

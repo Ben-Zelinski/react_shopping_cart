@@ -2,10 +2,10 @@ import React from "react";
 import ProductList from "./ProductList";
 import AddProduct from "./AddProduct";
 
-const Products = ({ products, onCartAdd, onSubmitClick }) => {
+const Products = ({ products, onCartAdd, onSubmitClick, onEditProduct}) => {
   return (
     <main>
-      <ProductList products={products} onCartAdd={onCartAdd} />
+      <ProductList products={products} onCartAdd={onCartAdd} onEditProduct={onEditProduct}/>
       <AddProduct onSubmitClick={onSubmitClick} />
     </main>
   );

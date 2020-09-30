@@ -13,14 +13,26 @@ class EditProduct extends React.Component {
     this.setState(tempState);
   };
 
+  handleSubmit = (e) => {
+    e.preventDefault();
+    const data = {
+      _id: this.props.product._id,
+      title: this.state.productName,
+      price: this.state.productPrice,
+      quantity: this.state.productQuantity,
+    };
+
+    console.log(data)
+    this.props.onEditProduct(data);
+  };
+
   render() {
-    console.log(this.props);
     return (
       <div class="add-form visible">
         <p>
-          <a class="button add-product-button">Add A Product</a>
+          <a class="button add-product-button">Edit A Product</a>
         </p>
-        <h3>Add Product</h3>
+        <h3>Edit Product</h3>
         <form>
           <div class="input-group">
             <label for="product-name">Product Name</label>
@@ -53,7 +65,9 @@ class EditProduct extends React.Component {
           </div>
 
           <div class="actions form-actions">
-            <a class="button">Add</a>
+            <a class="button" onClick={this.handleSubmit} >
+              Edit
+            </a>
             <a class="button" onClick={this.props.onCancelClick}>
               Cancel
             </a>

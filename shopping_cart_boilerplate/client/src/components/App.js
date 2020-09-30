@@ -20,6 +20,27 @@ class App extends React.Component {
     this.updateCart(product);
   }
 
+  onEditProduct(product) {
+    const data = {
+      method: "PUT",
+      body: JSON.stringify(product),
+      headers: { "content-type": "application/json" },
+    };
+    fetch(`http://localhost:5000/api/products/${product._id}`, data).then((product) => {
+      product.json().then((prod) => {
+        const newProducts = this.state.products.map((oldProd) => {
+          if (oldProd._id === prod._id) {
+            return Object.assign({}, prod);
+          } else {
+            return oldProd;
+          }
+        });
+        this.setState({ products: newProducts });
+      });
+    });
+       
+  }
+
   onSubmitClick(product) {
     const data = {
       method: "POST",
@@ -61,6 +82,7 @@ class App extends React.Component {
         <Products
           products={this.state.products}
           onCartAdd={this.onCartAdd.bind(this)}
+          onEditProduct={this.onEditProduct.bind(this)}
           onSubmitClick={this.onSubmitClick.bind(this)}
         />
       </div>
