@@ -31,6 +31,7 @@ router.put("/products/:id", (req, res) => {
       );
     })
     .then((updatedProduct) => {
+      res.set('Access-Control-Allow-Origin', '*');
       res.json(updatedProduct);
     });
 });
