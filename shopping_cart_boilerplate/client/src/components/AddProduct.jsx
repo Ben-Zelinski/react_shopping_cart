@@ -4,8 +4,8 @@ import store from "../lib/store";
 class AddProduct extends React.Component {
   state = {
     productTitle: "",
-    productPrice: 0,
-    productQuantity: 0,
+    productPrice: "",
+    productQuantity: "",
     addMode: false,
   };
 
@@ -41,15 +41,15 @@ class AddProduct extends React.Component {
     });
 
     this.toggleAddMode();
-    this.resetState();
-  };
-
-  resetState = () => {
-    this.setState({ productTitle: "", productPrice: 0, productQuantity: 0 });
   };
 
   toggleAddMode = () => {
-    this.setState({ addMode: !this.state.addMode });
+    this.setState({
+      productTitle: "",
+      productPrice: "",
+      productQuantity: "",
+      addMode: !this.state.addMode,
+    });
   };
 
   render() {
@@ -68,7 +68,7 @@ class AddProduct extends React.Component {
               type="text"
               id="productTitle"
               onChange={this.updateState}
-              value={this.state.productName}
+              value={this.state.productTitle}
             />
           </div>
 
@@ -78,7 +78,7 @@ class AddProduct extends React.Component {
               type="text"
               id="productPrice"
               onChange={this.updateState}
-              value={this.state.price}
+              value={this.state.productPrice}
             />
           </div>
 
@@ -88,7 +88,7 @@ class AddProduct extends React.Component {
               type="text"
               id="productQuantity"
               onChange={this.updateState}
-              value={this.state.quantity}
+              value={this.state.productQuantity}
             />
           </div>
 
