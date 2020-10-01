@@ -1,4 +1,5 @@
 import React from "react";
+import store from "../lib/store";
 
 class EditProduct extends React.Component {
   state = {
@@ -13,6 +14,31 @@ class EditProduct extends React.Component {
     this.setState(tempState);
   };
 
+  updateCartEdits = (oldProd, newProd) => {
+    const currProds = Object.assign({}, store.getState().cartProducts);
+    let quantity = 0;
+    const oldPrice = oldProd.price;
+
+    if (currProds[newProd._id]) {
+      quantity = currProds[newProd._id].quantity;
+      currProds[newProd._id].title = newProd.title;
+      currProds[newProd._id].price = newProd.price;
+      currProds[newProd._id] = Object.assign({}, currProds[newProd._id]);
+    } else {
+      return;
+    }
+
+    const change = (oldPrice - newProd.price) * quantity;
+
+    store.dispatch({
+      type: "CART_PRODUCT_EDITED",
+      payload: {
+        currProds,
+        change,
+      },
+    });
+  };
+
   handleSubmit = (e) => {
     e.preventDefault();
     const data = {
@@ -22,8 +48,34 @@ class EditProduct extends React.Component {
       quantity: this.state.productQuantity,
     };
 
-    console.log(data);
-    this.props.onEditProduct(data);
+    const fetchObj = {
+      method: "PUT",
+      body: JSON.stringify(data),
+      headers: { "content-type": "application/json" },
+    };
+
+    fetch(
+      `http://localhost:5000/api/products/${this.props.product._id}`,
+      fetchObj
+    ).then((product) => {
+      product.json().then((prod) => {
+        const newProducts = store.getState().products.map((oldProd) => {
+          if (oldProd._id === prod._id) {
+            this.updateCartEdits(oldProd, prod);
+            return Object.assign({}, prod);
+          } else {
+            return oldProd;
+          }
+        });
+
+        store.dispatch({
+          type: "PRODUCT_EDITED",
+          payload: {
+            products: newProducts,
+          },
+        });
+      });
+    });
     this.props.onCancelClick();
   };
 

@@ -1,22 +1,18 @@
 import React from "react";
 import Product from "./Product";
+import store from "../lib/store";
 
-const ProductList = ({
-  products,
-  onCartAdd,
-  onEditProduct,
-  onProductDelete,
-}) => {
+const ProductList = () => {
   return (
     <div class="product-listing">
       <h2>Products</h2>
-      {products.map((product) => (
+      {store.getState().products.map((product) => (
         <Product
           key={product._id}
           product={product}
-          onCartAdd={onCartAdd}
-          onEditProduct={onEditProduct}
-          onProductDelete={onProductDelete}
+          onCartAdd={this.props.onCartAdd}
+          onEditProduct={this.props.onEditProduct}
+          onProductDelete={this.props.onProductDelete}
         />
       ))}
     </div>

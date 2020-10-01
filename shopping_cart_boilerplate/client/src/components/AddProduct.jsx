@@ -1,4 +1,5 @@
 import React from "react";
+import store from "../lib/store";
 
 class AddProduct extends React.Component {
   state = {
@@ -22,7 +23,23 @@ class AddProduct extends React.Component {
       quantity: this.state.productQuantity,
     };
 
-    this.props.onSubmitClick(data);
+    const fetchObj = {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: { "content-type": "application/json" },
+    };
+
+    fetch("http://localhost:5000/api/products", fetchObj).then((product) => {
+      product.json().then((prod) => {
+        store.dispatch({
+          type: "PRODUCT_ADDED",
+          payload: {
+            product: prod,
+          },
+        });
+      });
+    });
+
     this.toggleAddMode();
     this.resetState();
   };
