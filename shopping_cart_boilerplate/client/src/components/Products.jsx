@@ -28,12 +28,8 @@ class Products extends React.Component {
   render() {
     return (
       <main>
-        <ProductList
-          onCartAdd={this.props.onCartAdd}
-          onEditProduct={this.props.onEditProduct}
-          onProductDelete={this.props.onProductDelete}
-        />
-        <AddProduct onSubmitClick={this.props.onSubmitClick} />
+        <ProductList />
+        <AddProduct />
       </main>
     );
   }
