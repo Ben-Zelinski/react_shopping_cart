@@ -1,14 +1,18 @@
 import React from "react";
-import ShopHeader from "./ShopHeader";
+import ShopHeaderContainer from "./ShopHeaderContainer";
 import Products from "./Products";
+import store from "../lib/store";
+import { Provider } from "react-redux";
 
 const App = () => {
   return (
-    <div id="app">
-      <ShopHeader />
-      <Products />
-    </div>
+    <Provider store={store}>
+      <div id="app">
+        <ShopHeaderContainer />
+        <Products />
+      </div>
+    </Provider>
   );
-}
+};
 
 export default App;

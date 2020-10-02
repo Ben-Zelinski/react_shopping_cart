@@ -1,6 +1,5 @@
 import React from "react";
-import EditProduct from "./EditProduct";
-import store from "../lib/store";
+import EditProductContainer from "./EditProductContainer";
 
 class Product extends React.Component {
   constructor(props) {
@@ -12,27 +11,7 @@ class Product extends React.Component {
 
   handleAddToCartClick = (e) => {
     e.preventDefault();
-    const product = this.props.product;
-    const currProds = Object.assign({}, store.getState().cartProducts);
-
-    if (currProds[product._id]) {
-      currProds[product._id] = Object.assign({}, currProds[product._id]);
-      currProds[product._id].quantity += 1;
-    } else {
-      currProds[product._id] = {
-        title: product.title,
-        quantity: 1,
-        price: product.price,
-      };
-    }
-
-    store.dispatch({
-      type: "ADDED_TO_CART",
-      payload: {
-        currProds,
-        sum: product.price,
-      },
-    });
+    this.props.onAddToCart();
   };
 
   handleEditClick = () => {
@@ -43,47 +22,8 @@ class Product extends React.Component {
     this.setState({ editMode: false });
   };
 
-  deleteFromCart = (id) => {
-    if (!store.getState().cartProducts[id]) return;
-    const currProds = Object.assign({}, store.getState().cartProducts);
-    const quantity = currProds[id].quantity;
-    const price = currProds[id].price;
-    delete currProds[id];
-
-    store.dispatch({
-      type: "CART_PRODUCT_DELETED",
-      payload: {
-        currProds,
-        change: quantity * price,
-      },
-    });
-  };
   handleProductDelete = () => {
-    const data = {
-      method: "DELETE",
-      body: JSON.stringify(this.props.product),
-      headers: { "content-type": "application/json" },
-    };
-
-    fetch(
-      `http://localhost:5000/api/products/${this.props.product._id}`,
-      data
-    ).then(() => {
-      const remainingProducts = store.getState().products.filter((oldProd) => {
-        if (oldProd._id !== this.props.product._id) {
-          return oldProd;
-        }
-      });
-
-      this.deleteFromCart(this.props.product._id);
-
-      store.dispatch({
-        type: "PRODUCT_DELETED",
-        payload: {
-          remainingProducts,
-        },
-      });
-    });
+    this.props.onProductDelete();
   };
 
   render() {
@@ -112,7 +52,7 @@ class Product extends React.Component {
               </a>
             </div>
           ) : (
-            <EditProduct
+            <EditProductContainer
               product={this.props.product}
               onCancelClick={this.handleCancelClick}
               onEditProduct={this.props.onEditProduct}

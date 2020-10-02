@@ -1,12 +1,12 @@
 import React from "react";
-import ProductList from "./ProductList";
-import AddProduct from "./AddProduct";
+import ProductListContainer from "./ProductListContainer";
+import AddProductContainer from "./AddProductContainer";
 
 const Products = () => {
   return (
     <main>
-      <ProductList />
-      <AddProduct />
+      <ProductListContainer />
+      <AddProductContainer />
     </main>
   );
 };
